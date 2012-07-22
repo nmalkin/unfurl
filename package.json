@@ -1,0 +1,16 @@
+{
+    "name": "unfurl",
+    "license": "GPL v3.0",
+    "author": "Nathan Malkin <nmalkin@mozilla.com>",
+    "version": "0.1.0",
+    "fullName": "Unfurl",
+    "id": "jid1-lJBTgL6ED9mAzA",
+    "description": "Find out where shortened URLs are leading you",
+    "preferences": [{
+        "name": "server",
+        "title": "Unfurl Server",
+        "description": "The URL of the Unfurl Server",
+        "type": "string",
+        "value": "http://localhost:3778"
+    }]
+}
