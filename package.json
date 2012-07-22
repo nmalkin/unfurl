@@ -12,5 +12,12 @@
         "description": "The URL of the Unfurl Server",
         "type": "string",
         "value": "http://localhost:3778"
+    },
+    {
+        "name": "depth",
+        "title": "Link Depth to Follow",
+        "description": "Some links may hide multiple redirects.",
+        "type": "integer",
+        "value": 2
     }]
 }
