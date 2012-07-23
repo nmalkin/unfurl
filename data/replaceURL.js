@@ -17,3 +17,10 @@ self.port.on('replace', function(data) {
         link.innerHTML = link.innerHTML.replace(oldURLCore, newURLCore);
     });
 });
+
+self.port.on('autoreplace', function() {
+    var links = document.querySelectorAll('a[href]');
+    Array.prototype.forEach.call(links, function(link) {
+        self.postMessage(link.href);
+    });
+});
