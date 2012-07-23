@@ -21,9 +21,22 @@ function replaceURL(oldURL, newURL) {
 }
 
 function autoReplace() {
+    var thisHost = window.location.hostname;
+    var host = /.+:\/\/([^\/]+)\//;
+
     var links = document.querySelectorAll('a[href]');
     Array.prototype.forEach.call(links, function(link) {
-        self.postMessage(link.href);
+        // Find the origin (hostname) of this link
+        var curHost = null;
+        var match = host.exec(link.href);
+        if(match) {
+            curHost = match[1];
+        }
+
+        // Only unfurl URLs with a different origin
+        if(curHost !== thisHost) {
+            self.postMessage(link.href);
+        }
     });
 }
 
