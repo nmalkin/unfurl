@@ -1,6 +1,4 @@
-self.port.on('replace', function(data) {
-    var urls = JSON.parse(data);
-
+function replaceURL(oldURL, newURL) {
     // Strip the protocol from the URLs
     // (We will use these to look for, and replace, any mentions of the old URL
     // in the anchor text.)
@@ -8,23 +6,32 @@ self.port.on('replace', function(data) {
     var oldURLCore = null,
         newURLCore = null;
     try {
-        oldURLCore = new RegExp(coreURL.exec(urls.oldURL)[1]);
-        newURLCore = coreURL.exec(urls.newURL)[1];
+        oldURLCore = new RegExp(coreURL.exec(oldURL)[1]);
+        newURLCore = coreURL.exec(newURL)[1];
     } catch(e) {}
 
-    var links = document.querySelectorAll('a[href="' + urls.oldURL + '"]');
+    var links = document.querySelectorAll('a[href="' + oldURL + '"]');
 
     // links is a NodeList, not an array, so we can't iterate over it directly
     // But we can do this (via https://developer.mozilla.org/en/DOM/NodeList):
     Array.prototype.forEach.call(links, function(link) {
-        link.href = urls.newURL;
+        link.href = newURL;
         link.innerHTML = link.innerHTML.replace(oldURLCore, newURLCore);
     });
-});
+}
 
-self.port.on('autoreplace', function() {
+function autoReplace() {
     var links = document.querySelectorAll('a[href]');
     Array.prototype.forEach.call(links, function(link) {
         self.postMessage(link.href);
     });
+}
+
+self.port.on('replace', function(data) {
+    var urls = JSON.parse(data);
+    replaceURL(urls.oldURL, urls.newURL);
+});
+
+self.port.on('autoreplace', function() {
+    autoReplace();
 });
