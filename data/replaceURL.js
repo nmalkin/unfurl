@@ -5,8 +5,12 @@ self.port.on('replace', function(data) {
     // (We will use these to look for, and replace, any mentions of the old URL
     // in the anchor text.)
     var coreURL = /.+:\/\/(.*)/;
-    var oldURLCore = new RegExp(coreURL.exec(urls.oldURL)[1]);
-    var newURLCore = coreURL.exec(urls.newURL)[1];
+    var oldURLCore = null,
+        newURLCore = null;
+    try {
+        oldURLCore = new RegExp(coreURL.exec(urls.oldURL)[1]);
+        newURLCore = coreURL.exec(urls.newURL)[1];
+    } catch(e) {}
 
     var links = document.querySelectorAll('a[href="' + urls.oldURL + '"]');
 
